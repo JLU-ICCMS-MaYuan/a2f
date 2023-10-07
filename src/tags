@@ -1,0 +1,88 @@
+Dyn	qe_outputs.py	/^class Dyn(/
+DynElph	qe_outputs.py	/^class DynElph(/
+Folder	qe_outputs.py	/^class Folder(/
+PhOuts	qe_outputs.py	/^class PhOuts(/
+Superconducting	sc_e.py	/^class Superconducting(/
+System	system.py	/^class System(/
+__init__	qe_outputs.py	/^    def __init__(/
+__init__	qe_outputs.py	/^    def __init__(/
+__init__	qe_outputs.py	/^    def __init__(/
+__init__	qe_outputs.py	/^    def __init__(/
+__init__	sc_e.py	/^    def __init__(/
+__init__	system.py	/^    def __init__(/
+a2f_dats	qe_outputs.py	/^    def a2f_dats(/
+a2f_direct	sc_direct.py	/^def a2f_direct(/
+as_dict	qe_outputs.py	/^    def as_dict(/
+beta	tc.py	/^def beta(/
+compare_q_points	utils.py	/^def compare_q_points(/
+constants	constants.py	1
+dctc	tc.py	/^def dctc(/
+delta	tc.py	/^def delta(/
+dos	qe_outputs.py	/^    def dos(/
+dyn_elphs	qe_outputs.py	/^    def dyn_elphs(/
+dyns	qe_outputs.py	/^    def dyns(/
+e_fermi	qe_outputs.py	/^    def e_fermi(/
+fill_entity	plotters.py	/^def fill_entity(/
+floatround	utils.py	/^def floatround(/
+format_e	utils.py	/^def format_e(/
+formula	qe_outputs.py	/^    def formula(/
+gammas	qe_outputs.py	/^    def gammas(/
+get_a2f	system.py	/^    def get_a2f(/
+get_all	sc_e.py	/^    def get_all(/
+get_direct	system.py	/^    def get_direct(/
+get_tc	system.py	/^    def get_tc(/
+get_tc_e	sc_e.py	/^    def get_tc_e(/
+hc	tc.py	/^def hc(/
+interp_lambda	interpolators.py	/^def interp_lambda(/
+interp_manager	interpolators.py	/^def interp_manager(/
+interpolators	interpolators.py	1
+l	sc_e.py	/^def l(/
+lambdas	qe_outputs.py	/^    def lambdas(/
+lambdas_a2f	sc_a2f.py	/^def lambdas_a2f(/
+lambdas_direct	sc_direct.py	/^def lambdas_direct(/
+main	main.py	/^def main(/
+main	main.py	1
+main	ptags.py	/^def main(/
+mkdirs	utils.py	/^def mkdirs(/
+parse_formula	utils.py	/^def parse_formula(/
+ph_outs	qe_outputs.py	/^    def ph_outs(/
+plot_article_view	plotters.py	/^def plot_article_view(/
+plot_entities	plotters.py	/^def plot_entities(/
+plot_entity	plotters.py	/^def plot_entity(/
+plot_spectra	plotters.py	/^def plot_spectra(/
+plot_summary	plotters.py	/^def plot_summary(/
+plot_system	plotters.py	/^def plot_system(/
+plotters	plotters.py	1
+pre_interpolation	interpolators.py	/^def pre_interpolation(/
+print_a2f	utils.py	/^def print_a2f(/
+print_direct	utils.py	/^def print_direct(/
+print_tc	utils.py	/^def print_tc(/
+ptags	ptags.py	1
+q_point	qe_outputs.py	/^    def q_point(/
+q_point	qe_outputs.py	/^    def q_point(/
+qe_outputs	qe_outputs.py	1
+save_dict	utils.py	/^def save_dict(/
+save_result	utils.py	/^def save_result(/
+save_structure	utils.py	/^def save_structure(/
+sc_a2f	sc_a2f.py	1
+sc_direct	sc_direct.py	1
+sc_e	sc_e.py	1
+sqr_freqs	qe_outputs.py	/^    def sqr_freqs(/
+stairs	utils.py	/^def stairs(/
+stround	utils.py	/^def stround(/
+struc	qe_outputs.py	/^    def struc(/
+system	system.py	1
+tc	tc.py	1
+tc_ad	tc.py	/^def tc_ad(/
+tc_ad_formula	tc.py	/^def tc_ad_formula(/
+tc_mcm	tc.py	/^def tc_mcm(/
+tc_mcm_formula	tc.py	/^def tc_mcm_formula(/
+treat_file	ptags.py	/^def treat_file(/
+update_summary	utils.py	/^def update_summary(/
+utils	utils.py	1
+w2s_a2f	sc_a2f.py	/^def w2s_a2f(/
+w2s_direct	sc_direct.py	/^def w2s_direct(/
+weight	qe_outputs.py	/^    def weight(/
+weights	qe_outputs.py	/^    def weights(/
+wlogs_a2f	sc_a2f.py	/^def wlogs_a2f(/
+wlogs_direct	sc_direct.py	/^def wlogs_direct(/

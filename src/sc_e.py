@@ -19,6 +19,15 @@ def l(a2f, r, t):
     freqs = a2f['freqs, THz']
     a2f = a2f['a2f (gamma), THz']
     I = 2 * a2f * freqs / (np.square(freqs) + np.square(r * t * k_K_THz * 2 * np.pi))
+    # scipy.integrate.simps 是 SciPy 库中的一个用于进行数值积分的函数
+    # 它用于使用 Simpson's 规则来估计数据的定积分值。
+    # Simpson's 规则是一种数值积分方法，通常用于对连续函数的积分进行数值近似。
+    # result = integrate.simps(y, x=None, dx=1, axis=-1)
+    # 要积分的函数值或数据点的数组。
+    # 可选参数，对应于 y 中数据点的 x 值。如果未提供 x，则假定数据点均匀分布在单位间隔上。
+    # dx：可选参数，表示数据点之间的距离。如果未提供 dx，则默认为 1。
+    # axis：可选参数，表示在哪个轴上执行积分操作。默认值是 -1，表示在最后一个轴上执行积分
+    
     return integrate.simps(I, x=freqs)
 
 
