@@ -34,18 +34,22 @@ class Folder(object):
             print(f'WARNING: Unable to detect *dyn* files in {self.__path}')
 
     def dyn_elphs(self):
-        dyn_elphs_paths = list(filter(lambda x: 'dyn' in x and 'elph' in x,
+        dyn_elphs_paths = list(filter(lambda x: 'elph' in x, # lambda x: 'dyn' in x and 'elph' in x,
                                       os.listdir(self.__path)))
         full_dyn_elphs_paths = sorted([os.path.join(self.__path, dyn_elphs_path) for dyn_elphs_path in dyn_elphs_paths])
         if full_dyn_elphs_paths:
-            print(f'Found dyn_elphs in {", ".join(full_dyn_elphs_paths)}')
+            # print(f'Found dyn_elphs in {", ".join(full_dyn_elphs_paths)}')
+            print(f'Found elphs in {", ".join(full_dyn_elphs_paths)}')
             return full_dyn_elphs_paths
         else:
-            print(f'ERROR: Unable to detect *dyn*.elph* files in {self.__path}')
+            # print(f'ERROR: Unable to detect *dyn*.elph* files in {self.__path}')
+            print(f'ERROR: Unable to detect *elph* files in {self.__path}')
             raise FileNotFoundError
 
     def ph_outs(self):
-        ph_outs_paths = list(filter(lambda x: '.ph' in x and 'out' in x,
+        # ph_outs_paths = list(filter(lambda x: '.ph' in x and 'out' in x,
+        #                             os.listdir(self.__path)))
+        ph_outs_paths = list(filter(lambda x: 'ph' in x and 'out' in x,
                                     os.listdir(self.__path)))
         full_ph_outs_paths = [os.path.join(self.__path, ph_outs_path) for ph_outs_path in ph_outs_paths]
         if full_ph_outs_paths:
@@ -140,7 +144,7 @@ class DynElph(object):
             for header in headers:
                 if header in line:
                     headers_idx.append(i)
-        headers_idx.append(len(lines))
+        headers_idx.append(len(lines)) # headers_idx保存着'Gaussian Broadening', 'Tetrahedron method'字符串所在的行号
         self.headers_idx = headers_idx
         self.headers = list()
         self.dos_lines = list()
@@ -148,12 +152,12 @@ class DynElph(object):
         for i in range(len(headers_idx) - 1):
             i1 = headers_idx[i]
             i2 = headers_idx[i + 1]
-            self.dos_lines.append(next(line for line in lines[i1:i2] if 'DOS' in line))
+            self.dos_lines.append(next(line for line in lines[i1:i2] if 'DOS' in line)) #获取每个展宽对应的dos，el_ph_nsigma的个数决定了展宽的个数，el_ph_sigma决定了展宽的宽度。
             self.lambda_gamma_lines.append(list(filter(lambda x: 'lambda' in x and 'gamma' in x, lines[i1:i2])))
             if 'Gaussian Broadening' in lines[i1]:
-                header = float(lines[i1].split()[2])
+                header = float(lines[i1].split()[2]) # 如果是包含'Gaussian Broadening'的行，会记录展宽宽度和展宽编号
             else:
-                header = lines[i1]
+                header = lines[i1] # 如果是包含'Tetrahedron Broadening'，则什么都不会记录
             self.headers.append(header)
         self.length = len(self.headers)
         self.q_point()
@@ -184,6 +188,9 @@ class DynElph(object):
         return self.q_point
 
     def sqr_freqs(self):
+        '''
+        功能：该方法是用来获得elph.imp_lambda文件中第2行到broadening行的所有频率的平方
+        '''
         lines = self.lines
         sqr_freqs = list()
         # idx = lines.index(next(line for line in lines if 'method' in line))
@@ -269,11 +276,11 @@ class PhOuts(object):
         q_points = list()
         if self.__lines:
             for _lines in self.__lines:
-                weight_lines = list(filter(lambda x: 'number of k points=' in x and 'method' in x, _lines))
-                occupancies = [i for i, x in enumerate(_lines) if 'Number of q in the star' in x]
+                weight_lines = list(filter(lambda x: 'number of k points=' in x and 'method' in x, _lines)) # 没什么用
+                occupancies = [i for i, x in enumerate(_lines) if 'Number of q in the star' in x] # 权重所在行号
                 for occupancy in occupancies:
                     q_point = tuple([float(x) for x in _lines[occupancy + 2].strip().split()[-3:]])
-                    weight = int(_lines[occupancy].split()[-1])
+                    weight = int(_lines[occupancy].split()[-1]) # 权重是weigh, 就表示有weigh个等价的q点
                     print(f'q = ({", ".join(["%.3f" % round(_q, 3) for _q in q_point])}) '
                           f'with number of q in the star {weight}')
                     q_points.append(q_point)

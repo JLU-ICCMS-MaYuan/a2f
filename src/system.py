@@ -37,10 +37,13 @@ class System(object):
 
     def get_direct(self, smoothing):
         self.smoothing = smoothing
-        self.direct.update(a2f_direct(self.q_points, smoothing))
-        self.direct.update(lambdas_direct(self.q_points, smoothing))
-        self.direct.update(wlogs_direct(self.direct))
-        self.direct.update(w2s_direct(self.direct))
+        # update 是字典（dictionary）对象的一个方法，用于将一个字典的键值对更新到另一个字典中。
+        # 具体来说，它将一个字典中的键值对添加到另一个字典中，如果有相同的键，则更新该键对应的值。
+        # 这个方法可以用于将一个字典扩展或合并到另一个字典中。
+        self.direct.update(a2f_direct(self.q_points, smoothing))     # 直接计算的方式获得a2f
+        self.direct.update(lambdas_direct(self.q_points, smoothing)) # 直接计算的方式获得lamnbda
+        self.direct.update(wlogs_direct(self.direct))                # 直接计算的方式获得wlog
+        self.direct.update(w2s_direct(self.direct))                  # 直接计算的方式获得w2s
         return self.direct
 
     def get_a2f(self, resolution, sigma, integration):

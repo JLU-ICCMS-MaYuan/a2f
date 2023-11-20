@@ -86,7 +86,7 @@ class Superconducting(object):
                         else:
                             d = 0
                         k[n - 1, m - 1] = l(self.a2f, m - n, t) + l(self.a2f, m + n - 1, t) - 2 * mu - d
-                w, _ = np.linalg.eig(k)
+                w, _ = np.linalg.eig(k) #求解本征值
                 b = np.max(w)
                 self.t.append(t)
                 self.b.append(b)

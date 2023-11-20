@@ -19,6 +19,7 @@ def a2f_direct(qpoints, smoothing, dtype=np.float16):
         smooth = np.exp(-np.square(smoothing / q_freqs))
         q_a2f_lambda = smooth * lambdas * q_freqs / 2 * weight
         q_a2f_gamma = smooth * gammas / q_freqs / nef / k_Ry_GHz / np.pi / 2 * weight * k_Ry_THz ** 2
+        #  "**" 表示幂运算，即将一个数自乘多次，指数右侧的数字表示幂的次数。在这里，k_Ry_THz ** 2 表示将 k_Ry_THz 的值自乘2次
         a2f_lambda.append(q_a2f_lambda)
         a2f_gamma.append(q_a2f_gamma)
         freqs.append(q_freqs)

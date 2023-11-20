@@ -40,7 +40,7 @@ def main():
         print('WARNING: Found no ph.out file(s). The structure will not be read and written.')
         ph_outs = list()
 
-    if ph_outs:
+    if ph_outs: # 即使是分q点计算声子，只要把其中一个q点对应的ph.out文件拿来即可。程序只从中获得结构信息。
         structure = ph_outs.struc()
         save_structure(structure, args.tol, args.p)
     else:
@@ -96,7 +96,8 @@ def main():
     for dyn_elph in dyn_elphs:
         length.append(dyn_elph.length)
     assert all(l == length[0] for l in length)
-    l = length[0]
+    l = length[0] # length 是每个q点的展宽个数。比如length=[10, 10, 10, 10]代表4个q点，每个q点的展宽有10个
+    # 所以理论上每个q点的展宽个数是一样的，l就是其中第一个q点的展宽的个数。
     if l == 1:
         print('Assuming a Tetrahedron method')
         # print(dyn_elphs[0].headers[0])
@@ -105,18 +106,19 @@ def main():
         headers = dyn_elphs[0].headers
         print(headers)
         summary = dict()
-    for i in range(l):
+    for i in range(l): # 总共有l个展宽，针对第i个展宽开展超导温度的计算
         if l > 1:
             print(f'\nBroadening: {headers[i]}')
             b = float(headers[i])
         else:
             b = 0
         _dyn_elphs = deepcopy(dyn_elphs)
-        for dyn_elph in _dyn_elphs:
-            dyn_elph.lambdas = dyn_elph.lambdas[i]
-            dyn_elph.gammas = dyn_elph.gammas[i]
-            dyn_elph.DOS = dyn_elph.DOS[i]
-            dyn_elph.E_F = dyn_elph.E_F[i]
+        for dyn_elph in _dyn_elphs: # 遍历所有q点，获得第i个展宽相应的lambdas, gammas, dos, E_F.
+            dyn_elph.lambdas = dyn_elph.lambdas[i] # 获得该q点的第i个展宽的lambda
+            dyn_elph.gammas = dyn_elph.gammas[i]   # 获得该q点的第i个展宽的gammas
+            dyn_elph.DOS = dyn_elph.DOS[i]         # 获得该q点的第i个展宽的DOS
+            dyn_elph.E_F = dyn_elph.E_F[i]         # 获得该q点的第i个展宽的E_F
+        # 至此，_dyn_elphs便只存储了所有q点的第i个展宽的信息。
         system = System(_dyn_elphs, weights)
         _ = system.get_direct(args.s)
         print_direct(system)
