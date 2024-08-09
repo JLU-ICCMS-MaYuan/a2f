@@ -16,6 +16,7 @@ class Folder(object):
     __path = ''
     dyn_elph_paths = list()
     ph_outs_paths = list()
+    scf_outs_paths = list()
     dyns = list()
 
     def __init__(self, path):
@@ -23,6 +24,7 @@ class Folder(object):
         self.dyn_paths = self.dyns()
         self.dyn_elph_paths = self.dyn_elphs()
         self.ph_outs_paths = self.ph_outs()
+        self.scf_outs_paths = self.scf_outs()
 
     def dyns(self):
         dyn_paths = list(filter(lambda x: 'dyn' in x and 'elph' not in x and 'dyn0' not in x, os.listdir(self.__path)))
@@ -58,7 +60,18 @@ class Folder(object):
         else:
             print('Warning: Unable to detect ph.out files in ', self.__path)
             return list()
-
+        
+    def scf_outs(self):
+        scf_outs_paths = list(filter(lambda x: 'scf' in x and 'out' in x,
+                                    os.listdir(self.__path)))
+        full_scf_outs_paths = [os.path.join(self.__path, scf_outs_path) for scf_outs_path in scf_outs_paths]
+        if full_scf_outs_paths:
+            print(f'Found scf.outs in {", ".join(full_scf_outs_paths)}')
+            return full_scf_outs_paths
+        else:
+            print('Warning: Unable to detect ph.out files in ', self.__path)
+            return list()
+        
     def a2f_dats(self, *p):
         a2f_dats_paths = list(filter(lambda x: 'a2F.dat' in x, os.listdir(self.__path)))
         if a2f_dats_paths:
@@ -334,3 +347,20 @@ class PhOuts(object):
         self.structure = IStructure(lattice=self.__matrix, species=self.__species, coords=self.__coords,
                                     coords_are_cartesian=True)
         return self.structure
+
+
+class ScfOuts(object):
+    def __init__(self, paths):
+        self.__paths = paths
+
+    def struc(self):
+        """
+        Reads first structure that appears in the ph.out files.
+        :return: pymatgen IStructure
+        """
+        from ase.io import read
+        from pymatgen.io.ase import AseAtomsAdaptor
+        if len(self.__paths ) > 1 or (len(self.__paths ) == 1 and not os.path.isdir(self.__paths [0])):
+            ase_type = read(self.__paths[0])
+            self.structure = AseAtomsAdaptor.get_structure(ase_type)
+            return self.structure

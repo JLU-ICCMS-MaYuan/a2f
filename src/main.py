@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 import argparse
 import os
 from copy import deepcopy
 
 from plotters import plot_system, plot_article_view, plot_summary
-from qe_outputs import Folder, PhOuts, DynElph, Dyn
+from qe_outputs import Folder, PhOuts, DynElph, Dyn, ScfOuts
 from sc_e import Superconducting
 from system import System
 from utils import save_dict, mkdirs, save_structure, parse_formula, print_direct, print_a2f, print_tc, save_result, \
@@ -40,8 +41,17 @@ def main():
         print('WARNING: Found no ph.out file(s). The structure will not be read and written.')
         ph_outs = list()
 
+    if folder.scf_outs_paths:
+        scf_outs = ScfOuts(folder.scf_outs_paths)
+    else:
+        print('WARNING: Found no scf.out file(s). The structure will not be read and written.')
+        scf_outs = list()
+
     if ph_outs: # 即使是分q点计算声子，只要把其中一个q点对应的ph.out文件拿来即可。程序只从中获得结构信息。
         structure = ph_outs.struc()
+        save_structure(structure, args.tol, args.p)
+    elif scf_outs:
+        structure = scf_outs.struc()
         save_structure(structure, args.tol, args.p)
     else:
         structure = 'Unknown'
